@@ -1,0 +1,72 @@
+#include <stdio.h>
+
+void swapAndShiftArray(int arr[], int size) {
+    if (size < 4) {
+        printf("Array size is too small to perform the operation.\n");
+        return;
+    }
+
+    // Step 1: Swap the first two and last two elements using XOR
+    arr[0] = arr[0] ^ arr[size - 2];
+    arr[size - 2] = arr[0] ^ arr[size - 2];
+    arr[0] = arr[0] ^ arr[size - 2];
+
+    arr[1] = arr[1] ^ arr[size - 1];
+    arr[size - 1] = arr[1] ^ arr[size - 1];
+    arr[1] = arr[1] ^ arr[size - 1];
+
+    // Step 2: Shift the array by 2 positions to the right
+    // Shift elements starting from the end of the array (index n-1)
+    for (int i = size - 1; i >= 2; i--) {
+        arr[i] = arr[i - 2];
+    }
+
+    // Step 3: Place the swapped last two elements at the beginning of the array
+    arr[0] = arr[size - 2] ^ arr[0];
+    arr[size - 2] = arr[size - 2] ^ arr[0];
+    arr[0] = arr[size - 2] ^ arr[0];
+
+    arr[1] = arr[size - 1] ^ arr[1];
+    arr[size - 1] = arr[size - 1] ^ arr[1];
+    arr[1] = arr[size - 1] ^ arr[1];
+}
+void swapAndShiftArray1(int arr[], int size,int shift) {
+    int j=0;
+    if (size < (shift*2)) {
+        printf("Array size is too small to perform the operation.\n");
+        return;
+    }
+    for(int i=0;i<size-shift;){
+        for(j=shift;j>0;j--){
+             arr[i]=arr[size-j]^arr[i];
+             arr[size-j]=arr[size-j]^arr[i];
+             arr[i]=arr[size-j]^arr[i];
+             i++;
+        }
+        
+    }
+    
+}
+
+void printArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int arr[] = {1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+    int size = sizeof(arr) / sizeof(arr[0]);
+
+    printf("Original array: ");
+    printArray(arr, size);
+
+    swapAndShiftArray1(arr, size,5);
+    // swapAndShiftArray(arr, size);
+
+    printf("Modified array: ");
+    printArray(arr, size);
+
+    return 0;
+}
